@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:expandable="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<EditText-->
+        <!--android:id="@+id/text"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:gravity="center"-->
+        <!--android:hint="Hello World !"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:background="#c0392b"/>-->
+
+    <!--<Button-->
+        <!--android:layout_below="@+id/text"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="click ME !"/>-->
+
+    <com.andexert.expandablelayout.library.ExpandableLayout
+        android:id="@+id/men"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        expandable:el_headerLayout="@layout/view_header_men"
+        expandable:el_contentLayout="@layout/view_content_men" />
+
+
+    <com.andexert.expandablelayout.library.ExpandableLayout
+        android:id="@+id/women"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        expandable:el_headerLayout="@layout/view_header_woman"
+        expandable:el_contentLayout="@layout/view_content_woman" />
+
+    <com.andexert.expandablelayout.library.ExpandableLayout
+        android:id="@+id/schoolboy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        expandable:el_headerLayout="@layout/view_header_schoolboy"
+        expandable:el_contentLayout="@layout/view_content_schoolboy" />
+
+
+
+
+
+
+</LinearLayout>
