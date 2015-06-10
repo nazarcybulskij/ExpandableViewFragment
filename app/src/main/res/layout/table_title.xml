@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="№"
+        android:textSize="18dp"
+        android:background="@android:color/darker_gray"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ВИДЫ ИСПЫТАНИЙ \n(ТЕСТЫ)"
+        android:background="@android:color/holo_blue_dark"
+        android:textSize="18dp"
+        android:gravity="center"/>
+
+
+
+
+</LinearLayout>
