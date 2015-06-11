@@ -47,25 +47,26 @@ public class MainActivityFragment extends Fragment {
 //    LinearLayout table;
 
         LayoutInflater mInflater;
+
         @InjectView(R.id.expandable_hto)
-        LinearLayout mLinearLayoutHto;
+        View mLinearLayoutHto;
         @InjectView(R.id.header_hto)
-        LinearLayout mLinearLayoutHeaderHto;
+        View mLinearLayoutHeaderHto;
 
         @InjectView(R.id.expandable_men)
-        LinearLayout mLinearLayoutMen;
+        View mLinearLayoutMen;
         @InjectView(R.id.header_men)
-        LinearLayout mLinearLayoutHeaderMen;
+        View mLinearLayoutHeaderMen;
 
         @InjectView(R.id.expandable_woman)
-        LinearLayout mLinearLayoutWoman;
+        View mLinearLayoutWoman;
         @InjectView(R.id.header_woman)
-        LinearLayout mLinearLayoutHeaderWomen;
+        View mLinearLayoutHeaderWomen;
 
         @InjectView(R.id.expandable_scoolboy)
-        LinearLayout mLinearLayoutScoolboy;
+        View mLinearLayoutScoolboy;
         @InjectView(R.id.header_scoolboy)
-        LinearLayout mLinearLayoutHeaderScoolboy;
+        View mLinearLayoutHeaderScoolboy;
 
         List<LinearLayoutandAnimator> mLinearLayoutList=new ArrayList<LinearLayoutandAnimator>();
 
@@ -90,8 +91,6 @@ public class MainActivityFragment extends Fragment {
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderMen, mLinearLayoutMen,null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderWomen, mLinearLayoutWoman,null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderScoolboy, mLinearLayoutScoolboy,null));
-
-
 
             addDrawListener();
 
@@ -186,7 +185,7 @@ public class MainActivityFragment extends Fragment {
 
 
 
-        private void expand(LinearLayout layout) {
+        private void expand(View layout) {
                 //set Visible
                 layout.setVisibility(View.VISIBLE);
 		        /* Remove and used in preDrawListener
@@ -206,7 +205,7 @@ public class MainActivityFragment extends Fragment {
                 //mAnimator.start();
         }
 
-        private void collapse(final LinearLayout layout) {
+        private void collapse(final View layout) {
                 int finalHeight = layout.getHeight();
 
                 ValueAnimator mAnimator = slideAnimator(finalHeight, 0,layout);
@@ -235,7 +234,7 @@ public class MainActivityFragment extends Fragment {
         }
 
 
-        private ValueAnimator slideAnimator(int start, int end, final LinearLayout layout) {
+        private ValueAnimator slideAnimator(int start, int end, final View layout) {
 
                 ValueAnimator animator = ValueAnimator.ofInt(start, end);
 

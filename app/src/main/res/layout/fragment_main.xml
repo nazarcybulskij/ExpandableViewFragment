@@ -44,8 +44,6 @@
         android:background="#FFF"
         android:orientation="vertical" >
 
-
-
         <LinearLayout
             android:id="@+id/header_men"
             android:layout_width="fill_parent"

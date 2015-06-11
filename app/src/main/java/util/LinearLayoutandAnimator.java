@@ -1,6 +1,7 @@
 package util;
 
 import android.animation.ValueAnimator;
+import android.view.View;
 import android.widget.LinearLayout;
 
 /**
@@ -8,31 +9,31 @@ import android.widget.LinearLayout;
  */
 public class LinearLayoutandAnimator {
 
-    LinearLayout header;
-    LinearLayout content;
+    View header;
+    View content;
     ValueAnimator animator;
 
 
-    public LinearLayoutandAnimator(LinearLayout header, LinearLayout content, ValueAnimator animator) {
+    public LinearLayoutandAnimator(View header, View content, ValueAnimator animator) {
         this.header = header;
         this.content = content;
         this.animator = animator;
     }
 
 
-    public LinearLayout getHeader() {
+    public View getHeader() {
         return header;
     }
 
-    public void setHeader(LinearLayout header) {
+    public void setHeader(View header) {
         this.header = header;
     }
 
-    public LinearLayout getContent() {
+    public View getContent() {
         return content;
     }
 
-    public void setContent(LinearLayout content) {
+    public void setContent(View content) {
         this.content = content;
     }
 
