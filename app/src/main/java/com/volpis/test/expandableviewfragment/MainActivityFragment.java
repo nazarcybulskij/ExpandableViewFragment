@@ -48,8 +48,8 @@ public class MainActivityFragment extends Fragment {
 
         LayoutInflater mInflater;
 
-        @InjectView(R.id.expandable_hto)
-        View mLinearLayoutHto;
+//        @InjectView(R.id.expandable_hto)
+//        View mLinearLayoutHto;
         @InjectView(R.id.header_hto)
         View mLinearLayoutHeaderHto;
 
@@ -87,7 +87,7 @@ public class MainActivityFragment extends Fragment {
 
             ButterKnife.inject(this, view);
 
-            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderHto, mLinearLayoutHto, null));
+           // mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderHto, mLinearLayoutHto, null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderMen, mLinearLayoutMen,null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderWomen, mLinearLayoutWoman,null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderScoolboy, mLinearLayoutScoolboy,null));
@@ -143,13 +143,36 @@ public class MainActivityFragment extends Fragment {
         alert.show();
     }
 
+
+    boolean state = false;
     @OnClick(R.id.header_hto)
     public void headerclick(View v){
-            if (mLinearLayoutHto.getVisibility() == View.GONE) {
-                    expand(mLinearLayoutHto);
-            } else {
-                    collapse(mLinearLayoutHto);
+
+            if (state){
+                    for (LinearLayoutandAnimator temp:mLinearLayoutList){
+                            //expand(temp.getContent());
+                            expand(temp.getHeader());
+                    }
+
+            }else{
+                    for (LinearLayoutandAnimator temp:mLinearLayoutList){
+                           // temp.getHeader().setVisibility(View.GONE);
+                          //  temp.getContent().setVisibility(View.GONE);
+                            collapse(temp.getContent());
+                            collapse(temp.getHeader());
+
+
+                    }
+
             }
+
+
+            state=!state;
+//            if (mLinearLayoutHto.getVisibility() == View.GONE) {
+//                    expand(mLinearLayoutHto);
+//            } else {
+//                    collapse(mLinearLayoutHto);
+//            }
     }
 
         @OnClick(R.id.header_men)
@@ -188,24 +211,25 @@ public class MainActivityFragment extends Fragment {
         private void expand(View layout) {
                 //set Visible
                 layout.setVisibility(View.VISIBLE);
-		        /* Remove and used in preDrawListener
+		        // Remove and used in preDrawListener
 		        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 		        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-		        mLinearLayoutHto.measure(widthSpec, heightSpec);
+		        layout.measure(widthSpec, heightSpec);
 
-		        mAnimator = slideAnimator(0, mLinearLayoutHto.getMeasuredHeight());
-		        */
-                for (LinearLayoutandAnimator temp:mLinearLayoutList){
-                        if (layout.equals(temp.getContent())) {
-                                temp.getAnimator().start();
-                                return;
-                        }
-                }
+		        ValueAnimator mAnimator = slideAnimator(0, layout.getMeasuredHeight(),layout);
+                mAnimator.start();
+
+//                for (LinearLayoutandAnimator temp:mLinearLayoutList){
+//                        if (layout.equals(temp.getContent())) {
+//                                temp.getAnimator().start();
+//                                return;
+//                        }
+//                }
 
                 //mAnimator.start();
         }
 
-        private void collapse(final View layout) {
+        private void collapse( final View layout) {
                 int finalHeight = layout.getHeight();
 
                 ValueAnimator mAnimator = slideAnimator(finalHeight, 0,layout);
