@@ -3,14 +3,27 @@ package com.volpis.test.expandableviewfragment;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +34,8 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
+import model.Item;
 import util.LinearLayoutandAnimator;
 
 
@@ -33,15 +48,17 @@ public class MainActivityFragment extends Fragment {
 //    @InjectView(R.id.textview_header_info)
 //    TextView mTVInfo;
 //
-//    @InjectView(R.id.gridview_men_age)
-//    GridView mGVMenAge;
-//    @InjectView(R.id.gridview_woman_age)
-//    GridView mGVWomanAge;
-//    @InjectView(R.id.gridview_schoolboy_age)
-//    GridView mGVSchoolbouAge;
-//
-//    String[] data = {"a", "b", "c", "d", "e","f"};
-//    ArrayAdapter<String> adapter;
+    @InjectView(R.id.gridview_men_age)
+    GridView mGVMenAge;
+    @InjectView(R.id.gridview_woman_age)
+    GridView mGVWomanAge;
+    @InjectView(R.id.gridview_schoolboy_age)
+    GridView mGVSchoolbouAge;
+
+    String[] data = {"a", "b", "c", "d", "e","f"};
+    ArrayAdapter<String> adapter_schoolboy;
+    ArrayAdapter<String> adapter_woman;
+    ArrayAdapter<String> adapter_men;
 //
 //    @InjectView(R.id.table)
 //    LinearLayout table;
@@ -68,6 +85,9 @@ public class MainActivityFragment extends Fragment {
         @InjectView(R.id.header_scoolboy)
         View mLinearLayoutHeaderScoolboy;
 
+    @InjectView(R.id.test_button_man)
+    Button mButtonMan;
+
         List<LinearLayoutandAnimator> mLinearLayoutList=new ArrayList<LinearLayoutandAnimator>();
 
 
@@ -87,12 +107,22 @@ public class MainActivityFragment extends Fragment {
 
             ButterKnife.inject(this, view);
 
+            requestGet();
+
            // mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderHto, mLinearLayoutHto, null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderMen, mLinearLayoutMen,null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderWomen, mLinearLayoutWoman,null));
-            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderScoolboy, mLinearLayoutScoolboy,null));
+            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderScoolboy, mLinearLayoutScoolboy, null));
 
             addDrawListener();
+
+
+            adapter_men = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
+            mGVMenAge.setAdapter(adapter_men);
+            adapter_woman = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
+            mGVWomanAge.setAdapter(adapter_woman);
+            adapter_schoolboy = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
+            mGVSchoolbouAge.setAdapter(adapter_schoolboy);
 
             return view;
 
@@ -202,13 +232,38 @@ public class MainActivityFragment extends Fragment {
                 }
         }
 
+    @OnItemClick(R.id.gridview_men_age)
+    void onItemMenSelected(int position) {
+
+        mButtonMan.setText(position+"");
+
+
+
+    }
+
+
+    @OnItemClick(R.id.gridview_woman_age)
+    void onItemWomanSelected(int position) {
+
+
+
+    }
+
+    @OnItemClick(R.id.gridview_schoolboy_age)
+    void onItemSchoolboySelected(int position) {
+
+
+
+    }
 
 
 
 
 
 
-        private void expand(View layout) {
+
+
+    private void expand(View layout) {
                 //set Visible
                 layout.setVisibility(View.VISIBLE);
 		        // Remove and used in preDrawListener
@@ -228,6 +283,13 @@ public class MainActivityFragment extends Fragment {
 
                 //mAnimator.start();
         }
+
+
+
+
+
+
+
 
         private void collapse( final View layout) {
                 int finalHeight = layout.getHeight();
@@ -264,126 +326,126 @@ public class MainActivityFragment extends Fragment {
 
 
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                                //Update Height
-                                int value = (Integer) valueAnimator.getAnimatedValue();
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        //Update Height
+                        int value = (Integer) valueAnimator.getAnimatedValue();
 
-                                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
-                                layoutParams.height = value;
-                                layout.setLayoutParams(layoutParams);
-                        }
+                        ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+                        layoutParams.height = value;
+                        layout.setLayoutParams(layoutParams);
+                    }
                 });
                 return animator;
         }
 
 
-    String responsestr ="{\n" +
-            "  \"all_competisions\": [\n" +
-            "    {\n" +
-            "      \"id\": 1,\n" +
-            "      \"competisions\": [\n" +
-            "        {\n" +
-            "          \"name\": \"Run\",\n" +
-            "          \"vik1\": [\n" +
-            "            15,\n" +
-            "            16,\n" +
-            "            17\n" +
-            "          ],\n" +
-            "          \"vik2\": [\n" +
-            "            16,\n" +
-            "            17,\n" +
-            "            18\n" +
-            "          ]\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"id\": 2,\n" +
-            "      \"competisions\": [\n" +
-            "        {\n" +
-            "          \"name\": \"Jump\",\n" +
-            "          \"vik1\": [\n" +
-            "            220,\n" +
-            "            225,\n" +
-            "            235\n" +
-            "          ],\n" +
-            "          \"vik2\": [\n" +
-            "            210,\n" +
-            "            215,\n" +
-            "            225\n" +
-            "          ]\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"id\": 3,\n" +
-            "      \"competisions\": [\n" +
-            "        {\n" +
-            "          \"name\": \"Pidtjaguvannja\",\n" +
-            "          \"vik1\": [\n" +
-            "            220,\n" +
-            "            235,\n" +
-            "            225\n" +
-            "          ],\n" +
-            "          \"vik2\": [\n" +
-            "            210,\n" +
-            "            215,\n" +
-            "            225\n" +
-            "          ]\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"name\": \"Or ryvok giri\",\n" +
-            "          \"vik1\": [\n" +
-            "            20,\n" +
-            "            30,\n" +
-            "            40\n" +
-            "          ],\n" +
-            "          \"vik2\": [\n" +
-            "            20,\n" +
-            "            30,\n" +
-            "            40\n" +
-            "          ]\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"id\": 4,\n" +
-            "      \"competisions\": [\n" +
-            "        {\n" +
-            "          \"name\": \"Turist pohod\",\n" +
-            "          \"vik1\": null,\n" +
-            "          \"vik2\": null,\n" +
-            "          \"description\": \"V sootvetstv s trebovanijami\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ],\n" +
-            "  \"count_in_age_category\": {\n" +
-            "    \"vik1\": [\n" +
-            "      9,\n" +
-            "      9,\n" +
-            "      9\n" +
-            "    ],\n" +
-            "    \"vik2\": [\n" +
-            "      9,\n" +
-            "      9,\n" +
-            "      9\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"count_of_competisions_to_do\": {\n" +
-            "    \"vik1\": [\n" +
-            "      7,\n" +
-            "      6,\n" +
-            "      7\n" +
-            "    ],\n" +
-            "    \"vik2\": [\n" +
-            "      5,\n" +
-            "      6,\n" +
-            "      7\n" +
-            "    ]\n" +
-            "  }\n" +
-            "}";
+    public void requestGet() {
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        String url = "http://vsporte.cc41365.tmweb.ru/gto_what/list";
+;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        model.Response responseObject = gson.fromJson( response, model.Response.class );
+                        ArrayList<Item>  mens = new ArrayList<Item>();
+                        ArrayList<Item>  woman = new ArrayList<Item>();
+                        ArrayList<Item>  childr = new ArrayList<Item>();
+
+                        int current_id=-1;
+                        for (Item temp:responseObject.getData()){
+                             if (temp.getTitle().equals("Школьники"))
+                                    current_id = temp.getId();
+
+                            if (current_id==temp.getParent_id())
+                                childr.add(temp);
+
+                        }
+
+                        adapter_schoolboy = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(childr));
+                        mGVSchoolbouAge.setAdapter(adapter_schoolboy);
 
 
-}
+
+
+                        current_id=-1;
+                        for (Item temp:responseObject.getData()){
+                            if (temp.getTitle().equals("Женщины"))
+                                current_id = temp.getId();
+
+                            if (current_id==temp.getParent_id())
+                                woman.add(temp);
+
+
+                        }
+
+                        adapter_woman = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(woman));
+                        mGVWomanAge.setAdapter(adapter_woman);
+
+
+                        current_id=-1;
+                        for (Item temp:responseObject.getData()) {
+                            if (temp.getTitle().equals("Мужчины"))
+                                current_id = temp.getId();
+
+                            if (current_id == temp.getParent_id())
+                                mens.add(temp);
+                        }
+
+                        adapter_men = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(mens));
+                        mGVMenAge.setAdapter(adapter_men);
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            //Toast.makeText(getActivity(), "Response is: " + response.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "That didn't work!", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+
+    }
+
+
+    String [] convertlistitemtoStringarray(ArrayList<Item> list ){
+        String [] data=new String[list.size()];
+        for (int  i=0;i<list.size();i++ ){
+            data[i]=list.get(i).getTitle();
+        }
+        return  data;
+    }
+
+
+
+
+
+
+
+
+
+    }

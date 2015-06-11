@@ -66,6 +66,7 @@
 
 
         <LinearLayout
+            android:animateLayoutChanges="true"
             android:id="@+id/expandable_men"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,22 +74,19 @@
             android:orientation="vertical"
             >
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+          <GridView
+              android:id="@+id/gridview_men_age"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:numColumns="3">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+          </GridView>
 
 
+          <Button
+              android:id="@+id/test_button_man"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
 
          </LinearLayout>
 
@@ -109,7 +107,7 @@
                 android:layout_height="48dp"
                 android:padding="10dp"
                 android:textSize="18dp"
-                android:text="WOMAN"
+                android:text="Женщины"
                 android:gravity="left"/>
 
         </LinearLayout>
@@ -122,9 +120,16 @@
             android:background="#FFF"
             android:orientation="vertical" >
 
-            <Button
+            <GridView
+                android:id="@+id/gridview_woman_age"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="100dp"
+                android:numColumns="3">
+
+            </GridView>
+
+
+
 
         </LinearLayout>
 
@@ -156,9 +161,15 @@
             android:background="#FFF"
             android:orientation="vertical" >
 
-            <Button
+            <GridView
+                android:id="@+id/gridview_schoolboy_age"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="100dp"
+                android:numColumns="3">
+
+            </GridView>
+
+
 
         </LinearLayout>
 
