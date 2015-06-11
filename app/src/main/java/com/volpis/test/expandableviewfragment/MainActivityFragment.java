@@ -1,61 +1,73 @@
 package com.volpis.test.expandableviewfragment;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.GridView;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.andexert.expandablelayout.library.ExpandableLayout;
-import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
-import model.Response;
-import view.MyGridView;
-import view.TableTowNorm;
+import util.LinearLayoutandAnimator;
 
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    @InjectView(R.id.info)
-    ExpandableLayout mELInfo;
-    @InjectView(R.id.textview_header_info)
-    TextView mTVInfo;
+//    @InjectView(R.id.info)
+//    ExpandableLayout mELInfo;
+//    @InjectView(R.id.textview_header_info)
+//    TextView mTVInfo;
+//
+//    @InjectView(R.id.gridview_men_age)
+//    GridView mGVMenAge;
+//    @InjectView(R.id.gridview_woman_age)
+//    GridView mGVWomanAge;
+//    @InjectView(R.id.gridview_schoolboy_age)
+//    GridView mGVSchoolbouAge;
+//
+//    String[] data = {"a", "b", "c", "d", "e","f"};
+//    ArrayAdapter<String> adapter;
+//
+//    @InjectView(R.id.table)
+//    LinearLayout table;
 
-    @InjectView(R.id.gridview_men_age)
-    GridView mGVMenAge;
-    @InjectView(R.id.gridview_woman_age)
-    GridView mGVWomanAge;
-    @InjectView(R.id.gridview_schoolboy_age)
-    GridView mGVSchoolbouAge;
+        LayoutInflater mInflater;
+        @InjectView(R.id.expandable_hto)
+        LinearLayout mLinearLayoutHto;
+        @InjectView(R.id.header_hto)
+        LinearLayout mLinearLayoutHeaderHto;
 
-    String[] data = {"a", "b", "c", "d", "e","f"};
-    ArrayAdapter<String> adapter;
+        @InjectView(R.id.expandable_men)
+        LinearLayout mLinearLayoutMen;
+        @InjectView(R.id.header_men)
+        LinearLayout mLinearLayoutHeaderMen;
 
-    @InjectView(R.id.table)
-    LinearLayout table;
+        @InjectView(R.id.expandable_woman)
+        LinearLayout mLinearLayoutWoman;
+        @InjectView(R.id.header_woman)
+        LinearLayout mLinearLayoutHeaderWomen;
 
-    LayoutInflater mInflater;
+        @InjectView(R.id.expandable_scoolboy)
+        LinearLayout mLinearLayoutScoolboy;
+        @InjectView(R.id.header_scoolboy)
+        LinearLayout mLinearLayoutHeaderScoolboy;
+
+        List<LinearLayoutandAnimator> mLinearLayoutList=new ArrayList<LinearLayoutandAnimator>();
 
 
 
@@ -69,24 +81,61 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //ButterKnife.inject(getActivity());
-        //return inflater.inflate(R.layout.fragment_main, container, false);
-        mInflater = inflater;
+            mInflater = inflater;
+            View view = mInflater.inflate(R.layout.fragment_main, container, false);
 
-        View view = mInflater.inflate(R.layout.fragment_main, container, false);
+            ButterKnife.inject(this, view);
 
-        ButterKnife.inject(this, view);
+            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderHto, mLinearLayoutHto, null));
+            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderMen, mLinearLayoutMen,null));
+            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderWomen, mLinearLayoutWoman,null));
+            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderScoolboy, mLinearLayoutScoolboy,null));
 
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
-        mGVMenAge.setAdapter(adapter);
-        mGVWomanAge.setAdapter(adapter);
-        mGVSchoolbouAge.setAdapter(adapter);
-        return view;
+
+
+            addDrawListener();
+
+            return view;
 
 
     }
 
-    @OnClick(R.id.info)
+        private void addDrawListener() {
+
+              for (int i=0;i<mLinearLayoutList.size();i++){
+
+                      final int finalI = i;
+                      ViewTreeObserver.OnPreDrawListener drawListener = new ViewTreeObserver.OnPreDrawListener() {
+
+                              @Override
+                              public boolean onPreDraw() {
+                                      mLinearLayoutList.get(finalI).getContent().getViewTreeObserver().removeOnPreDrawListener(this);
+                                      mLinearLayoutList.get(finalI).getContent().setVisibility(View.GONE);
+
+
+                                      final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                                      final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                                      mLinearLayoutList.get(finalI).getContent().measure(widthSpec, heightSpec);
+
+                                      mLinearLayoutList.get(finalI).setAnimator(slideAnimator(0, mLinearLayoutList.get(finalI).getContent().getMeasuredHeight(), mLinearLayoutList.get(finalI).getContent()));
+
+                                      return true;
+                              }
+                      };
+
+
+                      mLinearLayoutList.get(finalI).getContent().getViewTreeObserver().addOnPreDrawListener(drawListener);
+
+
+              }
+
+
+
+
+
+        }
+
+        @OnClick(R.id.textview_header_info)
     public void infoclicked(View v){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Title");
@@ -95,87 +144,115 @@ public class MainActivityFragment extends Fragment {
         alert.show();
     }
 
-    @OnClick(R.id.textview_header_info)
-    public void infoTVclicked(View v){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        alertDialog.setTitle("Title");
-        alertDialog.setMessage("Here is a really long message.");
-        AlertDialog alert = alertDialog.create();
-        alert.show();
+    @OnClick(R.id.header_hto)
+    public void headerclick(View v){
+            if (mLinearLayoutHto.getVisibility() == View.GONE) {
+                    expand(mLinearLayoutHto);
+            } else {
+                    collapse(mLinearLayoutHto);
+            }
     }
 
-    int mIntCurrentPosution_age= 0;
-
-    @OnItemClick(R.id.gridview_men_age)
-    void onItemSelected(int position) {
-        Toast.makeText(getActivity(),""+position,Toast.LENGTH_SHORT).show();
-        final FrameLayout parent = (FrameLayout)mGVMenAge.getParent().getParent();
-        if (mIntCurrentPosution_age == position) {
-            parent.performClick();
-            createTable();
-//            table.setText(mIntCurrentPosution_age + "");
-        }else{
-            parent.performClick();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-//                    table.setText(mIntCurrentPosution_age+"");
-                    createTable();
-                    parent.performClick();
+        @OnClick(R.id.header_men)
+        public void headerMenclick(View v){
+                if (mLinearLayoutMen.getVisibility() == View.GONE) {
+                        expand(mLinearLayoutMen);
+                } else {
+                        collapse(mLinearLayoutMen);
                 }
-            },500);
+        }
 
+        @OnClick(R.id.header_woman)
+        public void headerWomanclick(View v) {
+                if (mLinearLayoutWoman.getVisibility() == View.GONE) {
+                        expand(mLinearLayoutWoman);
+                } else {
+                        collapse(mLinearLayoutWoman);
+                }
+        }
 
+        @OnClick(R.id.header_scoolboy)
+        public void headerScoolboyclick(View v) {
+                if (mLinearLayoutScoolboy.getVisibility() == View.GONE) {
+                        expand(mLinearLayoutScoolboy);
+                } else {
+                        collapse(mLinearLayoutScoolboy);
+                }
         }
 
 
 
 
-        mIntCurrentPosution_age=position;
-
-    }
-
-     public  void createTable(){
-
-         table.removeAllViews();
-         //TableRow tr=new TableRow(getActivity());
-         //View view = mInflater.inflate(R.layout.item_age, null, false);
-
-         // btnTag.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-         //btnTag.setText("Button ");
-         //tr.addView(view);
-
-
-         //table.addView(tr);
-
-         createCompetisionRow();
 
 
 
+        private void expand(LinearLayout layout) {
+                //set Visible
+                layout.setVisibility(View.VISIBLE);
+		        /* Remove and used in preDrawListener
+		        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+		        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+		        mLinearLayoutHto.measure(widthSpec, heightSpec);
+
+		        mAnimator = slideAnimator(0, mLinearLayoutHto.getMeasuredHeight());
+		        */
+                for (LinearLayoutandAnimator temp:mLinearLayoutList){
+                        if (layout.equals(temp.getContent())) {
+                                temp.getAnimator().start();
+                                return;
+                        }
+                }
+
+                //mAnimator.start();
+        }
+
+        private void collapse(final LinearLayout layout) {
+                int finalHeight = layout.getHeight();
+
+                ValueAnimator mAnimator = slideAnimator(finalHeight, 0,layout);
+
+                mAnimator.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                                //Height=0, but it set visibility to GONE
+                                layout.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onAnimationStart(Animator animator) {
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animator) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animator) {
+                        }
+                });
+                mAnimator.start();
+        }
 
 
-     }
+        private ValueAnimator slideAnimator(int start, int end, final LinearLayout layout) {
+
+                ValueAnimator animator = ValueAnimator.ofInt(start, end);
 
 
-    public  void createCompetisionRow(){
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                //Update Height
+                                int value = (Integer) valueAnimator.getAnimatedValue();
 
-        Gson gson = new Gson();
-        Response response = gson.fromJson( responsestr, Response.class );
-
-        TableRow tr=new TableRow(getActivity());
-        TableTowNorm rowview=new TableTowNorm(getActivity(),response.getList_competisions().get(0));
-
-        //tr.addView(rowview);
-
-        table.addView(rowview);
-
-
-
-
-
-    }
-
-
+                                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+                                layoutParams.height = value;
+                                layout.setLayoutParams(layoutParams);
+                        }
+                });
+                return animator;
+        }
 
 
     String responsestr ="{\n" +

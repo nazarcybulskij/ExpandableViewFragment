@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/header"
+        android:id="@+id/header_hto"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
         android:padding="10dp"

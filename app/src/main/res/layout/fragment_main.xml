@@ -5,29 +5,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:expandable="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     >
+
+
 
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivityFragment">
 
-    <com.andexert.expandablelayout.library.ExpandableLayout
-        android:id="@+id/HTO"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        expandable:el_headerLayout="@layout/view_header_hto"
-        expandable:el_contentLayout="@layout/view_content_hto" />
-
-    <com.andexert.expandablelayout.library.ExpandableLayout
-        android:id="@+id/info"
+    <LinearLayout
+        android:id="@+id/header_hto"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        expandable:el_headerLayout="@layout/view_header_info"
-        expandable:el_contentLayout="@layout/view_content_info" />
+        android:background="#FFF"
+        android:orientation="horizontal" >
+
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:textSize="24dp"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
+            android:text="НОРМАТИВЫ ГТО"
+            android:gravity="left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expandable_hto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:orientation="vertical" >
+
+
+
+        <LinearLayout
+            android:id="@+id/header_men"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_header_men"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:text="MEN"
+            android:gravity="left"/>
+
+
+         </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/expandable_men"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+         </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/header_woman"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_header_woman"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:textSize="18dp"
+                android:text="WOMAN"
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/expandable_woman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="vertical" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/header_scoolboy"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_header_scoolboy"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:textSize="18dp"
+                android:text="SCOOLBOY"
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/expandable_scoolboy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="vertical" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/textview_header_info"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:padding="10dp"
+        android:textSize="24dp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:text="ИНФОРМАЦИЯ"
+        android:gravity="left"/>
 
 
 </LinearLayout>
-    </ScrollView>
+</ScrollView>

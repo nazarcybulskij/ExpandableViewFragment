@@ -21,6 +21,9 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:text="click ME !"/>-->
 
+
+
+
     <com.andexert.expandablelayout.library.ExpandableLayout
         android:id="@+id/men"
         android:layout_width="fill_parent"
@@ -42,6 +45,10 @@
         android:layout_height="wrap_content"
         expandable:el_headerLayout="@layout/view_header_schoolboy"
         expandable:el_contentLayout="@layout/view_content_schoolboy" />
+
+
+
+
 
 
 
