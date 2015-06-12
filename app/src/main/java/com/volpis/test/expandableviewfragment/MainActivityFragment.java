@@ -13,6 +13,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -86,6 +87,9 @@ public class MainActivityFragment extends Fragment {
         View mLinearLayoutScoolboy;
         @InjectView(R.id.header_scoolboy)
         View mLinearLayoutHeaderScoolboy;
+
+       @InjectView(R.id.image_norm_men)
+        ImageView mIVNormMen;
 
 
 
@@ -287,7 +291,7 @@ public class MainActivityFragment extends Fragment {
         private void collapse( final View layout) {
                 int finalHeight = layout.getHeight();
 
-                ValueAnimator mAnimator = slideAnimator(finalHeight, 0,layout);
+                ValueAnimator mAnimator = slideAnimator(finalHeight, 0, layout);
 
                 mAnimator.addListener(new Animator.AnimatorListener() {
                         @Override
