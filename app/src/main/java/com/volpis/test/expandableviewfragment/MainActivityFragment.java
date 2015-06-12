@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -368,6 +369,11 @@ public class MainActivityFragment extends Fragment {
 
                         }
 
+
+                        Collections.sort(childr);
+
+
+
                         adapter_schoolboy = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(childr));
                         mGVSchoolbouAge.setAdapter(adapter_schoolboy);
 
@@ -385,6 +391,8 @@ public class MainActivityFragment extends Fragment {
 
                         }
 
+                        Collections.sort(woman);
+
                         adapter_woman = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(woman));
                         mGVWomanAge.setAdapter(adapter_woman);
 
@@ -398,8 +406,14 @@ public class MainActivityFragment extends Fragment {
                                 mens.add(temp);
                         }
 
+                        Collections.sort(mens);
+
+
                         adapter_men = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(mens));
                         mGVMenAge.setAdapter(adapter_men);
+
+
+
 
 
 

@@ -1,9 +1,11 @@
 package model;
 
+import java.util.Comparator;
+
 /**
  * Created by nazar on 11.06.15.
  */
-public class Item {
+public class Item implements Comparator<Item>, Comparable<Item>{
         int id;
         int parent_id;
         String title;
@@ -48,5 +50,15 @@ public class Item {
 
         public void setId(int id) {
                 this.id = id;
+        }
+
+        @Override
+        public int compareTo(Item item) {
+                return this.getTitle().compareTo(item.getTitle());
+        }
+
+        @Override
+        public int compare(Item item, Item t1) {
+                return item.getTitle().compareTo(t1.getTitle());
         }
 }
