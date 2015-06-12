@@ -25,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -407,6 +409,21 @@ public class MainActivityFragment extends Fragment {
 
                         adapter_men =  new ItemAdapter(getActivity(),mens);
                         mGVMenAge.setAdapter(adapter_men);
+
+                        Picasso.with(getActivity())
+                                .load("http://square.github.io/picasso/static/sample.png")
+                                .into(mIVNormMen, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        getView().findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                        //progressbar.setVisibility(View.GONE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+
+                                    }
+                                });
 
 
 
