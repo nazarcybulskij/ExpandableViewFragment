@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import adapter.ItemAdapter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -56,10 +57,10 @@ public class MainActivityFragment extends Fragment {
     @InjectView(R.id.gridview_schoolboy_age)
     GridView mGVSchoolbouAge;
 
-    String[] data = {"a", "b", "c", "d", "e","f"};
-    ArrayAdapter<String> adapter_schoolboy;
-    ArrayAdapter<String> adapter_woman;
-    ArrayAdapter<String> adapter_men;
+    String[] data = {"", "", "", "", "",""};
+    ItemAdapter adapter_schoolboy;
+    ItemAdapter adapter_woman;
+    ItemAdapter adapter_men;
 //
 //    @InjectView(R.id.table)
 //    LinearLayout table;
@@ -86,8 +87,7 @@ public class MainActivityFragment extends Fragment {
         @InjectView(R.id.header_scoolboy)
         View mLinearLayoutHeaderScoolboy;
 
-    @InjectView(R.id.test_button_man)
-    Button mButtonMan;
+
 
         List<LinearLayoutandAnimator> mLinearLayoutList=new ArrayList<LinearLayoutandAnimator>();
 
@@ -112,18 +112,10 @@ public class MainActivityFragment extends Fragment {
 
            // mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderHto, mLinearLayoutHto, null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderMen, mLinearLayoutMen,null));
-            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderWomen, mLinearLayoutWoman,null));
+            mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderWomen, mLinearLayoutWoman, null));
             mLinearLayoutList.add(new LinearLayoutandAnimator(mLinearLayoutHeaderScoolboy, mLinearLayoutScoolboy, null));
 
             addDrawListener();
-
-
-            adapter_men = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
-            mGVMenAge.setAdapter(adapter_men);
-            adapter_woman = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
-            mGVWomanAge.setAdapter(adapter_woman);
-            adapter_schoolboy = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, data);
-            mGVSchoolbouAge.setAdapter(adapter_schoolboy);
 
             return view;
 
@@ -236,7 +228,7 @@ public class MainActivityFragment extends Fragment {
     @OnItemClick(R.id.gridview_men_age)
     void onItemMenSelected(int position) {
 
-        mButtonMan.setText(position+"");
+
 
 
 
@@ -374,7 +366,7 @@ public class MainActivityFragment extends Fragment {
 
 
 
-                        adapter_schoolboy = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(childr));
+                        adapter_schoolboy = new ItemAdapter(getActivity(),childr);
                         mGVSchoolbouAge.setAdapter(adapter_schoolboy);
 
 
@@ -393,7 +385,7 @@ public class MainActivityFragment extends Fragment {
 
                         Collections.sort(woman);
 
-                        adapter_woman = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(woman));
+                        adapter_woman =  new ItemAdapter(getActivity(),woman);
                         mGVWomanAge.setAdapter(adapter_woman);
 
 
@@ -409,21 +401,8 @@ public class MainActivityFragment extends Fragment {
                         Collections.sort(mens);
 
 
-                        adapter_men = new ArrayAdapter<String>(getActivity(), R.layout.item_age, R.id.tvText, convertlistitemtoStringarray(mens));
+                        adapter_men =  new ItemAdapter(getActivity(),mens);
                         mGVMenAge.setAdapter(adapter_men);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -446,13 +425,6 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    String [] convertlistitemtoStringarray(ArrayList<Item> list ){
-        String [] data=new String[list.size()];
-        for (int  i=0;i<list.size();i++ ){
-            data[i]=list.get(i).getTitle();
-        }
-        return  data;
-    }
 
 
 

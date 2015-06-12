@@ -83,12 +83,9 @@
           </GridView>
 
 
-          <Button
-              android:id="@+id/test_button_man"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" />
 
             <ImageView
+                android:id="@+id/image_norm_men"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher"
@@ -132,7 +129,16 @@
                 android:layout_height="100dp"
                 android:numColumns="3">
 
+
+
             </GridView>
+
+            <ImageView
+                android:id="@+id/image_norm_woman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center"/>
 
 
 
@@ -174,6 +180,12 @@
                 android:numColumns="3">
 
             </GridView>
+            <ImageView
+                android:id="@+id/image_norm_scoolboy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center"/>
 
 
 
