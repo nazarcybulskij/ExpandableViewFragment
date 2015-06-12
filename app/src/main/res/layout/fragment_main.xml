@@ -57,7 +57,7 @@
             android:layout_height="48dp"
             android:padding="10dp"
             android:textSize="18dp"
-            android:text="MEN"
+            android:text="Мужчины"
             android:gravity="left"/>
 
 
@@ -161,7 +161,7 @@
                 android:layout_height="48dp"
                 android:padding="10dp"
                 android:textSize="18dp"
-                android:text="SCOOLBOY"
+                android:text="Школьники"
                 android:gravity="left"/>
 
         </LinearLayout>
