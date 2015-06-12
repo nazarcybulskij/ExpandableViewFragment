@@ -234,9 +234,8 @@ public class MainActivityFragment extends Fragment {
     @OnItemClick(R.id.gridview_men_age)
     void onItemMenSelected(int position) {
 
-
-
-
+        adapter_men.setClickedposution(position);
+        adapter_men.notifyDataSetChanged();
 
     }
 
@@ -244,12 +243,18 @@ public class MainActivityFragment extends Fragment {
     @OnItemClick(R.id.gridview_woman_age)
     void onItemWomanSelected(int position) {
 
+        adapter_woman.setClickedposution(position);
+        adapter_woman.notifyDataSetChanged();
+
 
 
     }
 
     @OnItemClick(R.id.gridview_schoolboy_age)
     void onItemSchoolboySelected(int position) {
+        adapter_schoolboy.setClickedposution(position);
+        adapter_schoolboy.notifyDataSetChanged();
+
 
 
 
@@ -421,6 +426,8 @@ public class MainActivityFragment extends Fragment {
 
                                     @Override
                                     public void onError() {
+
+
 
                                     }
                                 });
